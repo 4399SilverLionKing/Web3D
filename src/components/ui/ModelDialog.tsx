@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import Image from 'next/image';
+
 // 模型信息接口
 export interface ModelInfo {
   id: string;
@@ -64,7 +66,7 @@ export default function ModelDialog({
           {/* 图片 */}
           {modelInfo.image && (
             <div className="mb-4">
-              <img
+              <Image
                 src={modelInfo.image}
                 alt={modelInfo.name}
                 className="h-32 w-full rounded-lg object-cover"

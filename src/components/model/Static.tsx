@@ -1,10 +1,10 @@
 'use client';
 
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 
 import { useGLTF } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { Group, Mesh } from 'three';
+import { Group } from 'three';
 
 import { useMaterialOptimizer } from '../tool/MaterialOptimizer';
 
