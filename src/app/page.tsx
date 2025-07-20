@@ -61,8 +61,8 @@ export default function Home() {
               前进
             </p>
             <p>
-              <kbd className="rounded bg-gray-700 px-2 py-1 text-xs">S</kbd> 或{' '}
-              <kbd className="rounded bg-gray-700 px-2 py-1 text-xs">↓</kbd>{' '}
+              <kbd className="rounded bg-gray-700 px-2 py-1 text-xs">A</kbd> 或{' '}
+              <kbd className="rounded bg-gray-700 px-2 py-1 text-xs">←</kbd>{' '}
               后退
             </p>
             <p>

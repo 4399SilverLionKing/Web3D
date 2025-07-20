@@ -38,28 +38,28 @@ interface LightProps {
 
 export default function Light({
   // 环境光默认值
-  ambientIntensity = 0.5,
+  ambientIntensity = 1.2,
   ambientColor = '#ffffff',
 
   // 主方向光默认值
-  mainLightIntensity = 1.2,
+  mainLightIntensity = 2.2,
   mainLightColor = '#ffffff',
   mainLightPosition = [100, 100, 50],
   enableShadows = true,
 
   // 辅助光默认值
-  fillLightIntensity = 0.4,
+  fillLightIntensity = 1.4,
   fillLightColor = '#87CEEB',
   fillLightPosition = [-50, 50, -50],
 
   // 点光源默认值
-  pointLightIntensity = 0.5,
+  pointLightIntensity = 1.5,
   pointLightColor = '#ffffff',
   pointLightPosition = [0, 50, 0],
   pointLightDistance = 1000,
 
   // 半球光默认值
-  hemisphereIntensity = 0.3,
+  hemisphereIntensity = 1.3,
   hemisphereSkyColor = '#87CEEB',
   hemisphereGroundColor = '#654321',
 

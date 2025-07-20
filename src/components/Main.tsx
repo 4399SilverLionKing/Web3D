@@ -135,7 +135,7 @@ export default function Scene() {
               scale={1}
               initialPosition={[50, -5, 600]}
               onPositionChange={handleModelPositionChange}
-              disableBackward={true}
+              disableBackward={false}
             />
           </Suspense>
 

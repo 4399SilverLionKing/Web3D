@@ -79,7 +79,7 @@ export default function DynamicModel({
     }
     // 只有在未禁用后退时才允许后退动作
     if (backward && !disableBackward) {
-      newVelocity.add(forwardVector.multiplyScalar(acceleration));
+      newVelocity.add(forwardVector.multiplyScalar(acceleration * 0.1));
     }
 
     // 限制最大速度
