@@ -2,13 +2,15 @@
 
 import React, { Suspense, useState } from 'react';
 
+import { Physics } from '@react-three/cannon';
 import { KeyboardControls } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 import { Vector3 } from 'three';
 
-import ClickableStaticModel from './model/ClickableStatic';
-import DynamicModel from './model/Dynamic';
-import StaticModel from './model/Static';
+import ClickableModel from './model/ClickableModel';
+import ControllableModel from './model/ControllableModel';
+import Plane from './model/PlaneModel';
+import SceneModel from './model/SceneModel';
 import CameraFollow from './tool/CameraFollow';
 import Light from './tool/Light';
 import ModelDialog, { ModelInfo } from './ui/ModelDialog';
@@ -96,54 +98,71 @@ export default function Scene() {
           {/* 光照系统 */}
           <Light fogNear={100} fogFar={1500} fogColor="#B0E0E6" />
 
-          {/* 场景模型 */}
-          <Suspense fallback={null}>
-            <StaticModel
-              modelPath="/modals/sea.glb"
-              scale={1}
-              position={[0, 0, 0]}
-            />
-          </Suspense>
-
-          {/* 可点击的静态模型 - 维京战船 */}
-          <Suspense fallback={null}>
-            <ClickableStaticModel
-              modelPath="/modals/viking_ship.glb"
-              scale={10}
-              position={[400, -20, 400]}
-              rotation={[0, Math.PI * 0.5, 0]}
-              modelInfo={modelInfoData.viking_ship}
-              onModelClick={handleModelClick}
-            />
-          </Suspense>
-
-          {/* 可点击的静态模型 - 卡拉维尔帆船 */}
-          <Suspense fallback={null}>
-            <ClickableStaticModel
-              modelPath="/modals/caravel_ship.glb"
-              scale={1}
-              position={[-300, -10, 300]}
-              modelInfo={modelInfoData.caravel_ship}
-              onModelClick={handleModelClick}
-            />
-          </Suspense>
-
-          {/* 动态模型 */}
-          <Suspense fallback={null}>
-            <DynamicModel
-              modelPath="/modals/boat.glb"
-              scale={1}
-              initialPosition={[50, -5, 600]}
-              onPositionChange={handleModelPositionChange}
-              disableBackward={false}
-            />
-          </Suspense>
-
           {/* 相机跟随 */}
           <CameraFollow
             target={[modelPosition.x, modelPosition.y, modelPosition.z]}
             smoothness={0.1}
           />
+
+          {/* 物理系统 */}
+          <Physics gravity={[0, -9.82, 0]}>
+            {/* 物理平面 */}
+            <Plane position={[0, -10, 0]} rotation={[-Math.PI / 2, 0, 0]} />
+
+            {/* 场景模型 */}
+            <Suspense fallback={null}>
+              <SceneModel
+                modelPath="/modals/sea.glb"
+                scale={[1, 1, 1]}
+                position={[0, 0, 0]}
+                enablePhysics={false}
+              />
+            </Suspense>
+
+            {/* 可点击的静态模型 - 维京战船 */}
+            <Suspense fallback={null}>
+              <ClickableModel
+                modelPath="/modals/viking_ship.glb"
+                scale={[10, 10, 10]}
+                position={[400, -20, 400]}
+                rotation={[0, Math.PI * 0.5, 0]}
+                modelInfo={modelInfoData.viking_ship}
+                onModelClick={handleModelClick}
+                enablePhysics={true}
+                physicsSize={[180, 50, 40]}
+              />
+            </Suspense>
+
+            {/* 可点击的静态模型 - 卡拉维尔帆船 */}
+            <Suspense fallback={null}>
+              <ClickableModel
+                modelPath="/modals/caravel_ship.glb"
+                scale={[1, 1, 1]}
+                position={[-300, -10, 300]}
+                modelInfo={modelInfoData.caravel_ship}
+                onModelClick={handleModelClick}
+                enablePhysics={true}
+                physicsSize={[65, 80, 160]}
+              />
+            </Suspense>
+
+            {/* 动态模型 - 玩家船只 */}
+            <Suspense fallback={null}>
+              <ControllableModel
+                modelPath="/modals/boat.glb"
+                scale={[1, 1, 1]}
+                position={[50, 0, 600]}
+                onPositionChange={handleModelPositionChange}
+                physicsSize={[5, 5, 30]}
+                mass={5}
+                forwardForce={300}
+                backwardForce={300}
+                torqueStrength={200}
+                maxSpeed={100}
+                driftCorrection={1.2}
+              />
+            </Suspense>
+          </Physics>
         </Canvas>
       </KeyboardControls>
 
